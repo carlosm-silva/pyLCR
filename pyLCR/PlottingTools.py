@@ -70,8 +70,27 @@ def computeMJD(MET, returnFraction=True):
 
 ##########################################################################################
 
-def plotLightCurve(lightCurve, logCenter=False, MET=None, useMJD=False, ylim=None, triggerMET=None, triggerMJD=None, ylog=False, xlog=False, ymin=None, \
-    ymax=None, xmin=None, xmax=None, removeTicks=1, savefig=False, showPlot=False, plotTS=False, plotIndex=False, extension='.png'):
+def plotLightCurve(lightCurve,
+                   logCenter=False,
+                   MET=None,
+                   useMJD=False,
+                   ylim=None,
+                   triggerMET=None,
+                   triggerMJD=None,
+                   ylog=False,
+                   xlog=False,
+                   ymin=None,
+                   ymax=None,
+                   xmin=None,
+                   xmax=None,
+                   removeTicks=1,
+                   savefig=False,
+                   showPlot=False,
+                   plotTS=False,
+                   plotIndex=False,
+                   plotErrors=True,
+                   plotUpperLimits=True,
+                   extension='.png'):
     """Plot data from the light curve repository
 
     Arguments:
@@ -91,8 +110,10 @@ def plotLightCurve(lightCurve, logCenter=False, MET=None, useMJD=False, ylim=Non
         removeTicks (int):          Specifies the number of ticks to remove from the y-axis on multi-axis plots, Default = 1
         savefig (BOOL):             Specifies whether the plot should be saved to disk. Default = False
         showPlot (BOOL):            Specifies whether the plot should be displayed to screen. Default = True
-        plotTS (BOOL):              Specifies whether the TS should be displayed on a seperate plot pane. Default = False
-        plotIndex (BOOL):           Specifies whether the photon inde should be displayed on a seperate plot pane. Default = False
+        plotTS (BOOL):              Specifies whether the TS should be displayed on a separate plot pane. Default = False
+        plotIndex (BOOL):           Specifies whether the photon index should be displayed on a separate plot pane. Default = False
+        plotErrors (BOOL):          Specifies whether the error bars should be plotted. Default = True
+        plotUpperLimits (BOOL):     Specifies whether the upper limits should be plotted. Default = True
         extension (str):            Specifies whether the format of the saved plot image. Default = 'png''
 
     Returns:
@@ -216,13 +237,15 @@ def plotLightCurve(lightCurve, logCenter=False, MET=None, useMJD=False, ylim=Non
     ax.scatter(timebins_detections, flux, marker='o', s=25, edgecolors='black', color='#3e4d8b', linewidths=0.5)
 
     # Plot the upper limits
-    ax.scatter(timebins_upperlimits, flux_upper_limit, marker='v', s=25, edgecolors='black', color='#3e4d8b', linewidths=0.5, alpha=0.6)
+    if plotUpperLimits:
+        ax.scatter(timebins_upperlimits, flux_upper_limit, marker='v', s=25, edgecolors='black', color='#3e4d8b', linewidths=0.5, alpha=0.6)
 
     # Don't let the error bars affect the plot scale
     ax.set_autoscale_on(False)
 
     # Plot the error bars
-    ax.errorbar(timebins_detections, flux, xerr=x_errors, yerr=numpy.transpose(flux_error), fmt='none', markersize=5, color='#3e4d8b', ecolor='#3e4d8b', markeredgecolor='black', label=label, capsize=0, alpha=0.6)
+    if plotErrors:
+        ax.errorbar(timebins_detections, flux, xerr=x_errors, yerr=numpy.transpose(flux_error), fmt='none', markersize=5, color='#3e4d8b', ecolor='#3e4d8b', markeredgecolor='black', label=label, capsize=0, alpha=0.6)
 
     # Set the y-axis range
     if ylog == True:
