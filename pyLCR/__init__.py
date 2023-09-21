@@ -26,9 +26,9 @@ from .PlottingTools import getCurrentMET
 from .PlottingTools import computeMJD
 from .Sources import sources
 
-del DataTools
-del PlottingTools
-del Sources
+# del DataTools
+# del PlottingTools
+# del Sources
 
 print("\nThe Fermi-LAT Light Curve Repository Toolkit v%s" % __version__)
 print("Support Contact: Daniel Kocevski (daniel.kocevski@nasa.gov)")
