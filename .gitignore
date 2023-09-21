@@ -1,3 +1,4 @@
 build/
 pyLCR.egg-info/
 pyLCR/__pycache__/
+.idea/
