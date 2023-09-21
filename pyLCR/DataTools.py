@@ -64,6 +64,7 @@ def getLightCurve(source, cadence='daily', flux_type='photon', index_type='fixed
         flux_type (str):        Specifies the requested flux type. Options include 'photon' and 'energy'
         index_type (str):       Specifies the spectral index freedom during fit. Options include 'free' and 'fixed'
         ts_min (int):           The minimum likelihood ratio test statistic for which a flux estimate is reported as opposed to an upper limit.
+        verbose (bool):         If True, print extra information to the screen.
 
     Returns:
         A key-value pair dictionary containing numpy arrays of light curve data
@@ -107,7 +108,8 @@ def getLightCurve(source, cadence='daily', flux_type='photon', index_type='fixed
     filename = '_'.join([source_quoted, cadence, flux_type, index_type, "tsmin" + str(ts_min)])
     filename += ".json"
 
-    print("\nDownloading data for %s..." % source)
+    if verbose:
+        print("\nDownloading data for %s..." % source)
 
     try:
 
@@ -123,7 +125,7 @@ def getLightCurve(source, cadence='daily', flux_type='photon', index_type='fixed
 
             # Check the http status code to see if the data was downloaded successfully
             code = int(response.code)
-            if code >= 200 and code <= 299 and len(data['ts']) > 0:
+            if verbose and 200 <= code <= 299 and len(data['ts']) > 0:
                 print('Done.')
 
     # Parse the status codes of any failures
