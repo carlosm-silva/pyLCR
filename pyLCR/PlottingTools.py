@@ -84,6 +84,7 @@ def plotLightCurve(lightCurve,
                    xmin=None,
                    xmax=None,
                    removeTicks=1,
+                   legend=True,
                    savefig=False,
                    showPlot=True,
                    plotTS=False,
@@ -108,6 +109,7 @@ def plotLightCurve(lightCurve,
         xmin (float):               Specifies a lower limit on the x-axis. Default = None
         xmax (float):               Specifies an upper limit on the x-axis. Default = None
         removeTicks (int):          Specifies the number of ticks to remove from the y-axis on multi-axis plots, Default = 1
+        legend (BOOL):              Specifies whether a legend should be displayed. Default = True
         savefig (BOOL):             Specifies whether the plot should be saved to disk. Default = False
         showPlot (BOOL):            Specifies whether the plot should be displayed to screen. Default = True
         plotTS (BOOL):              Specifies whether the TS should be displayed on a separate plot pane. Default = False
@@ -218,7 +220,6 @@ def plotLightCurve(lightCurve,
             timebins_detections = timebins_detections - MET
             timebins_upperlimits = timebins_upperlimits - MET
 
-
     # Create two subplots sharing the x axes
     if plotTS == True and plotIndex == True:
         f, (ax, ax2, ax3) = plot.subplots(3, sharex=True, sharey=False, figsize=[18,12])
@@ -234,18 +235,18 @@ def plotLightCurve(lightCurve,
     #     f.subplots_adjust(hspace=0)
 
     # Plot the flux values
-    ax.scatter(timebins_detections, flux, marker='o', s=25, edgecolors='black', color='#3e4d8b', linewidths=0.5)
+    ax.scatter(timebins_detections, flux, marker='o', s=25, edgecolors='black', color='#3e4d8b', linewidths=0.5, label="Detections")
 
     # Plot the upper limits
     if plotUpperLimits:
-        ax.scatter(timebins_upperlimits, flux_upper_limit, marker='v', s=25, edgecolors='black', color='#3e4d8b', linewidths=0.5, alpha=0.6)
+        ax.scatter(timebins_upperlimits, flux_upper_limit, marker='v', s=25, edgecolors='black', color='#3e4d8b', linewidths=0.5, alpha=0.6, label='Upper Limits')
 
     # Don't let the error bars affect the plot scale
     ax.set_autoscale_on(False)
 
     # Plot the error bars
     if plotErrors:
-        ax.errorbar(timebins_detections, flux, xerr=x_errors, yerr=numpy.transpose(flux_error), fmt='none', markersize=5, color='#3e4d8b', ecolor='#3e4d8b', markeredgecolor='black', label=label, capsize=0, alpha=0.6)
+        ax.errorbar(timebins_detections, flux, xerr=x_errors, yerr=numpy.transpose(flux_error), fmt='none', markersize=5, color='#3e4d8b', ecolor='#3e4d8b', markeredgecolor='black', capsize=0, alpha=0.6)
 
     # Set the y-axis range
     if ylog == True:
@@ -299,10 +300,10 @@ def plotLightCurve(lightCurve,
 
     # Annotate the MET of interest
     if triggerMET is not None:
-        ax.plot([triggerMET, triggerMET], [ax.get_ylim()[0],ax.get_ylim()[1]], linestyle='--', color='darkred')
+        ax.plot([triggerMET, triggerMET], [ax.get_ylim()[0], ax.get_ylim()[1]], linestyle='--', color='darkred', label="Trigger MET")
 
     if triggerMJD is not None:
-        ax.plot([triggerMJD, triggerMJD], [ax.get_ylim()[0],ax.get_ylim()[1]], linestyle='--', color='darkred')
+        ax.plot([triggerMJD, triggerMJD], [ax.get_ylim()[0], ax.get_ylim()[1]], linestyle='--', color='darkred', label="Trigger MJD")
 
     # Set a log scale
     if ylog == True:
@@ -328,7 +329,7 @@ def plotLightCurve(lightCurve,
 
     # Create the TS plot pane
     if plotTS == True:
-        ax2.scatter(timebins, ts, marker='o', s=25, edgecolors='black', color='#3e4d8b', linewidths=0.5)
+        ax2.scatter(timebins, ts, marker='o', s=25, edgecolors='black', color='#3e4d8b', linewidths=0.5, label="Test Statistic")
         ax2.errorbar(timebins, ts, xerr=x_errors, yerr=numpy.zeros(len(ts)), fmt='none', markersize=5, color='#3e4d8b', ecolor='#3e4d8b', markeredgecolor='black', capsize=0, alpha=0.6)
 
         ax2.set_ylabel('TS')
@@ -343,7 +344,7 @@ def plotLightCurve(lightCurve,
 
     # Create the photon index plot pane
     if plotIndex == True:
-        ax3.scatter(timebins_detections, photon_index, marker='o', s=25, edgecolors='black', color='#3e4d8b', linewidths=0.5)
+        ax3.scatter(timebins_detections, photon_index, marker='o', s=25, edgecolors='black', color='#3e4d8b', linewidths=0.5, label='Index')
         ax3.errorbar(timebins_detections, photon_index, xerr=x_errors, yerr=photon_index_error, fmt='none', markersize=5, color='#3e4d8b', ecolor='#3e4d8b', markeredgecolor='black', capsize=0, alpha=0.6)
 
         # Set the y-label
@@ -370,6 +371,10 @@ def plotLightCurve(lightCurve,
         # Save the plot
         print('\nSaving photon flux plot to:\n%s' % filename)
         plot.savefig(filename, bbox_inches='tight', dpi=96)
+
+    # Display the Legend
+    if legend == True:
+        ax.legend(loc='upper right', fontsize=10)
 
     # Show the plot
     if showPlot == True:
