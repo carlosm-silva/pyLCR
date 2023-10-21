@@ -32,3 +32,4 @@ from .Sources import sources
 
 print("\nThe Fermi-LAT Light Curve Repository Toolkit v%s" % __version__)
 print("Support Contact: Daniel Kocevski (daniel.kocevski@nasa.gov)")
+print("Plus Branch by Carlos Silva (cfilho3@gatech.edu)")

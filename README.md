@@ -4,6 +4,12 @@ A python interface to the Fermi-LAT Light Curve Repository
 
 https://fermi.gsfc.nasa.gov/ssc/data/access/lat/LightCurveRepository/index.html
 
+Original repository by Daniel Kocevski (daniel.kocevski@nasa.gov), all rights reserved.
+
+Plus branch support minor changes, developed by Carlos M Silva (cfilho3@gatech.edu).
+Software is provided as is, with no warranty of any kind.
+Don't except this branch to be maintained, but feel free to shoot me an email if you have any questions.
+
 ## Installation
 
 ### Requirements

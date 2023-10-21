@@ -32,7 +32,7 @@ class LightCurve():
         self.bin_id = numpy.array([]) 
 
         self.source = None
-        self.flux_type =  None
+        self.flux_type = None
         self.index_type = None
         self.cadence = None
         self.ts_min = None
@@ -129,7 +129,7 @@ def getLightCurve(source, cadence='daily', flux_type='photon', index_type='fixed
                 print('Done.')
 
     # Parse the status codes of any failures
-    except urllib.error.HTTPError  as e:
+    except urllib.error.HTTPError as e:
         print("HTTP Error.")
         print("Return Code", e.code)
 
@@ -210,4 +210,3 @@ def getLightCurve(source, cadence='daily', flux_type='photon', index_type='fixed
 
 
     return lightCurve
-
