@@ -184,17 +184,17 @@ def getLightCurve(source, cadence='daily', flux_type='photon', index_type='fixed
     # lightCurve['GAL'] = numpy.array(data['GAL'])
     # lightCurve['bin_id'] = numpy.array(data['bin_id'])
 
-    lightCurve.met = numpy.array(data['ts'])[:,0]
-    lightCurve.met_detections = numpy.array(data['flux'])[:,0]
+    lightCurve.met = numpy.array(data['ts'])[:,0] if len(data['ts']) > 0 else numpy.array([])
+    lightCurve.met_detections = numpy.array(data['flux'])[:,0] if len(data['flux']) > 0 else numpy.array([])
     lightCurve.met_upperlimits = met_upperlimits
-    lightCurve.ts = numpy.array(data['ts'])[:,1]
-    lightCurve.flux = numpy.array(data['flux'])[:,1]
-    lightCurve.flux_upper_limits = numpy.array(data['flux_upper_limits'])[:,1]
-    lightCurve.flux_error = numpy.array(data['flux_error'])[:,1:]
-    lightCurve.photon_index = numpy.array(data['photon_index'])[:,1]
-    lightCurve.photon_index_interval = numpy.array(data['photon_index_interval'])[:,1]
-    lightCurve.fit_tolerance = numpy.array(data['fit_tolerance'])[:,1]
-    lightCurve.fit_convergence = numpy.array(data['fit_convergence'])[:,1]
+    lightCurve.ts = numpy.array(data['ts'])[:,1] if len(data['ts']) > 0 else numpy.array([])
+    lightCurve.flux = numpy.array(data['flux'])[:,1] if len(data['flux']) > 0 else numpy.array([])
+    lightCurve.flux_upper_limits = numpy.array(data['flux_upper_limits'])[:,1] if len(data['flux_upper_limits']) > 0 else numpy.array([])
+    lightCurve.flux_error = numpy.array(data['flux_error'])[:,1:] if len(data['flux_error']) > 0 else numpy.array([])
+    lightCurve.photon_index = numpy.array(data['photon_index'])[:,1] if len(data['photon_index']) > 0 else numpy.array([])
+    lightCurve.photon_index_interval = numpy.array(data['photon_index_interval'])[:,1] if len(data['photon_index_interval']) > 0 else numpy.array([])
+    lightCurve.fit_tolerance = numpy.array(data['fit_tolerance'])[:,1] if len(data['fit_tolerance']) > 0 else numpy.array([])
+    lightCurve.fit_convergence = numpy.array(data['fit_convergence'])[:,1] if len(data['fit_convergence']) > 0 else numpy.array([])
     lightCurve.dlogl = numpy.array(data['dlogl'])
     lightCurve.EG = numpy.array(data['EG'])
     lightCurve.GAL = numpy.array(data['GAL'])
